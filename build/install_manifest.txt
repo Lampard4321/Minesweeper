@@ -1,1 +1,0 @@
-/home/kimtae1029/Minesweeper/build/.././bin/Minesweeper

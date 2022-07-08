@@ -1,1 +1,0 @@
-/usr/bin/g++  -g  -rdynamic CMakeFiles/Minesweeper.dir/main.cc.o  -o Minesweeper  libMinesweeperlib.a 

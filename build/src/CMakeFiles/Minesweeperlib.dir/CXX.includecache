@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/kimtae1029/Minesweeper/src/field.cc
+iostream
+-
+cstdlib
+-
+ctime
+-
+field.h
+/home/kimtae1029/Minesweeper/src/field.h
+
+/home/kimtae1029/Minesweeper/src/field.h
+utils.h
+/home/kimtae1029/Minesweeper/src/utils.h
+
+/home/kimtae1029/Minesweeper/src/utils.h
+termios.h
+-
+cstdio
+-
+

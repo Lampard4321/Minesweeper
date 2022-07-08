@@ -14,7 +14,7 @@ class minesweeper{
     void cursor_update(int dir);
 
   public:
-    field* field;
+    field* m_field;
 
   private:
     int cur_row;

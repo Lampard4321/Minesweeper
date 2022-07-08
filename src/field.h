@@ -1,16 +1,18 @@
 #ifndef FIELD_H
 #define FIELD_H
 
+#include "utils.h"
+
 class field{
   public:
     field(int n_row, int n_col, int n_mine);
     ~field();
     int click(int row, int col);
-    void flag();
-    int check_neighbor();
+    void flag(int row, int col);
+    int check_neighbor(int row, int col);
     void disp_field(int row, int col);
     void disp_mine(int row, int col);
-    void disp_done(int row, int col);
+    void disp_done();
 
   private:
     bool valid_area(int row, int col);

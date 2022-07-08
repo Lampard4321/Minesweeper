@@ -3,6 +3,8 @@
 #include <ctime>
 #include "field.h"
 
+using namespace std;
+
 field::field(int n_row, int n_col, int n_mine){
   this->n_row=n_row;
   this->n_col=n_col;
@@ -29,9 +31,40 @@ field::~field(){
   free(neighbor_field);
 }
 
+void field::flag(int row, int col){
+  flag_field[row][col]=!flag_field[row][col];
+}
+
+int field::check_neighbor(int row, int col){
+  if(click_field[row][col]==false && flag_field[row][col]==false) return 0;
+  else{
+    for (int i = -1; i <= 1; i++) {
+      for (int j = -1; j <= 1; j++){
+        if(i==0 && j==0) continue;
+        else{
+          int r=row+i;
+          int c=col+j;
+          if(valid_area(r,c)){
+            if(mine_field[r][c]==true) {
+              if(flag_field[r][c]==true) continue;
+              return -1;
+            }
+            else if(flag_field[r][c]==true)continue;
+            else {
+              click_field[r][c]=true;
+              chain_open(r,c);
+            }
+          }
+        }
+      }
+    }
+  }
+  return 0;
+}
+
 int field::click(int row, int col){
-  if(mine_field[row][col]==true) return -1; //bomb
-  else if(flag_field[row][col]==true) return 0;
+  if(mine_field[row][col]==true) return -1;
+  else if(click_field[row][col]==true||flag_field[row][col]==true) return 0;
   chain_open(row,col);
 
   return (done_th==done_cur);
@@ -39,33 +72,53 @@ int field::click(int row, int col){
 }
 
 void field::chain_open(int row, int col){
-  if(neighbor_field[row][col]>0) {
-    flag_field[row][col]=false;
-    click_field[row][col]=true;
+/* if(rowine_field[row][col]==true) return; */
+  if (!click_field[row][col]) {
+    click_field[row][col] = true;
     done_cur++;
-    return;
+    if (neighbor_field[row][col] > 0) {
+      return;
+    }
   }
+  else return;
 
-  else if(mine_field[row][col]==true){
-    return;
-  }
-  
-  else if(click_field[row][col]==false){
-    flag_field[row][col]=false;
-    click_field[row][col]=true;
-    done_cur++; 
-    for(int i=-1; i<=1; i++){
-      for(int j=-1; j<=1; j++){
-        int recur_row=row+i;
-        int recur_col=col+j;
-        if(valid_area(recur_row,recur_col)) {
-          chain_open(recur_row,recur_col);
-        }
+  for (int i = -1; i <= 1; i++) {
+    int n_row = row + i;
+    for (int j = -1; j <= 1; j++) {
+      int n_col = col + j;
+      if (i == 0 && j == 0) continue; // do not cover rowyself -> inifinite loop
+      if (valid_area(n_row, n_col)) {
+        chain_open(n_row, n_col);
       }
     }
   }
 
-  return;
+/* else if(neighbor_field[row][col]>0 && click_field[row][col]==false) { */
+/* if(flag_field[row][col]==true) return; */
+/* click_field[row][col]=true; */
+/* done_cur++; */
+/* return; */
+/* } */
+
+/* else if(neighbor_field[row][col]==0){ */
+/* if(flag_field[row][col]==true) return; */
+/* click_field[row][col]=true; */
+/* done_cur++; */
+/* for(int i=-1; i<=1; i++){ */
+/* for(int j=-1; j<=1; j++){ */
+/* if(i==0 && j==0) continue; */
+
+/* int recur_row=row+i; */
+/* int recur_col=col+j; */
+/* if(valid_area(recur_row,recur_col)) { */
+/* chain_open(recur_row,recur_col); */
+/* } */
+/* } */
+/* } */
+/* } */
+
+
+/* return; */
 }
 
 bool field::valid_area(int row, int col){
@@ -155,70 +208,86 @@ int field::neighbor_num_mine(int center_row, int center_col){
 }
 
 void field::disp_field(int row, int col){
-  for(int i=0; i<n_col+2; i++) std::cout<<"-";
-  for(int i=0; i<n_row; i++){
-    std::cout<<"|";
-    for(int j=0; j<n_col; j++){
-      if(mine_field[i][j]==true) std::cout<<"*";
-      else if(i==row && j==col) std::cout<<"$";
-      else if(click_field[i][j]==true) std::cout<<"'";
-      else if(neighbor_field[i][j]>0) std::cout<<neighbor_field[i][j];
-      else if(flag_field[i][j]==true) std::cout<<"?";
-      else std::cout<<" ";
-    } 
-    std::cout<<"|";
-  }
-  for(int i=0; i<n_col+2; i++) std::cout<<"-";
+  system("clear");
 
-  std::cout<<"----------------";
-  std::cout<<"|h:left        |";
-  std::cout<<"|j:down        |";
-  std::cout<<"|k:up          |";
-  std::cout<<"|l:right       |";
-  std::cout<<"|q:click       |";
-  std::cout<<"|w:check flag  |";
-  std::cout<<"|e:open around |";
-  std::cout<<"----------------";
+  for(int i=0; i<n_col+2; i++) cout<<"-";
+  cout<<endl;
+  for(int i=0; i<n_row; i++){
+    cout<<"|";
+    for(int j=0; j<n_col; j++){
+      if(i==row && j==col) cout<<"$";
+      else if(click_field[i][j]==true) {
+        if(neighbor_field[i][j]>0) cout<<neighbor_field[i][j];
+        else cout<<"\'";
+      }
+      else if(flag_field[i][j]==true) cout<<"?";
+      else cout<<" ";
+    } 
+    cout<<"|"<<endl;
+  }
+  for(int i=0; i<n_col+2; i++) cout<<"-";
+  cout<<endl;
+
+  cout << "----------------"<<endl;
+  cout<<"|h:left        |"<<endl;
+  cout<<"|j:down        |"<<endl;
+  cout<<"|k:up          |"<<endl;
+  cout<<"|l:right       |"<<endl;
+  cout<<"|q:click       |"<<endl;
+  cout<<"|w:check flag  |"<<endl;
+  cout<<"|e:open around |"<<endl;
+  cout<<"----------------"<<endl;
 
   return;
 }
 
 void field::disp_mine(int row, int col){
-  for(int i=0; i<n_col+2; i++) std::cout<<"-";
+  system("clear");
+
+  for(int i=0; i<n_col+2; i++) cout<<"-";
+  cout<<endl;
   for(int i=0; i<n_row; i++){
-    std::cout<<"|";
+    cout<<"|";
     for(int j=0; j<n_col; j++){
-      if(mine_field[i][j]==true) std::cout<<"*";
-      else if(i==row && j==col) std::cout<<"$";
-      else if(click_field[i][j]==true) std::cout<<"'";
-      else if(neighbor_field[i][j]>0) std::cout<<neighbor_field[i][j];
-      else if(flag_field[i][j]==true) std::cout<<"?";
-      else std::cout<<" ";
+      if(mine_field[i][j]==true) cout<<"*";
+      else if(i==row && j==col) cout<<"$";
+      else if(click_field[i][j]==true) {
+        if(neighbor_field[i][j]>0) cout<<neighbor_field[i][j];
+        else cout<<"\'";
+      }
+      else if(flag_field[i][j]==true) cout<<"?";
+      else cout<<" ";
     }
-    std::cout<<"|";
+    cout<<"|"<<endl;
   }
-  for(int i=0; i<n_col+2; i++) std::cout<<"-";
-  std::cout<<"---------------BOMB!---------------";
+  for(int i=0; i<n_col+2; i++) cout<<"-";
+  cout<<endl;
+  cout<<"---------------BOMB!---------------";
 
   return;
 }
 
-void field::disp_done(int row, int col){
-  for(int i=0; i<n_col+2; i++) std::cout<<"-";
+void field::disp_done(){
+  system("clear");
+
+  for(int i=0; i<n_col+2; i++) cout<<"-";
+  cout<<endl;
   for(int i=0; i<n_row; i++){
-    std::cout<<"|";
+    cout<<"|";
     for(int j=0; j<n_col; j++){
-      if(mine_field[i][j]==true) std::cout<<"*";
-      else if(i==row && j==col) std::cout<<"$";
-      else if(click_field[i][j]==true) std::cout<<"'";
-      else if(neighbor_field[i][j]>0) std::cout<<neighbor_field[i][j];
-      else if(flag_field[i][j]==true) std::cout<<"?";
-      else std::cout<<" ";
+      if(mine_field[i][j]==true) cout<<"*";
+      else if(click_field[i][j]==true) {
+        if(neighbor_field[i][j]>0) cout<<neighbor_field[i][j];
+        else cout<<"\'";
+      }
+      else if(flag_field[i][j]==true) cout<<"?";
+      else cout<<" ";
     }
-    std::cout<<"|";
+    cout<<"|"<<endl;
   }
-  for(int i=0; i<n_col+2; i++) std::cout<<"-";
-  std::cout<<"---------------DONE!---------------";
+  for(int i=0; i<n_col+2; i++) cout<<"-";
+  cout<<endl;
+  cout<<"---------------DONE!---------------";
 
   return;
 }

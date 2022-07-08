@@ -1,0 +1,2 @@
+/usr/bin/ar qc libMinesweeperlib.a  CMakeFiles/Minesweeperlib.dir/field.cc.o CMakeFiles/Minesweeperlib.dir/minesweeper.cc.o CMakeFiles/Minesweeperlib.dir/utils.cc.o
+/usr/bin/ranlib libMinesweeperlib.a

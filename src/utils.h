@@ -2,12 +2,17 @@
 #define __UTILS_H__
 
 #include <termios.h>
-#include <stdio.h>
+#include <cstdio>
 
-#define WEST 1
-#define NORTH 2
-#define EAST 3
-#define SOUTH 4
+typedef enum DIR {
+  WEST=0, 
+  NORTH,
+  SOUTH,
+  EAST
+} DIR;
+
+
+
 
 const int config[3][3] = {
   {9, 9, 10}, {16, 16, 40}, {16, 30, 99}

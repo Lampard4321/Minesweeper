@@ -24,14 +24,14 @@ class field{
     void chain_open(int row, int col);
 
   public:
+    int n_row;
+    int n_col;
 
   private:
     bool** mine_field;
     bool** click_field;
     bool** flag_field;
     int** neighbor_field;
-    int n_row;
-    int n_col;
     int n_mine;
     int done_th;
     int done_cur;

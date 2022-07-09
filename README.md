@@ -12,16 +12,15 @@ How to use this game
 There are three modes, easy, medium, hard.
 
 Easy: 9x9, number of mines = 10
-
 Medium: 16x16, number of mines = 40
-
 Hard: 30x16, number of mines = 99
 
+
 Keys
-moving cursor -  h / j / k / l : left / down / up / right (same as Vim)
-left click - q
-check flag - w
-open around - e
+1. moving cursor -  h / j / k / l : left / down / up / right (same as Vim)
+2. left click - q
+3. check flag - w
+4. open around - e
 
 After playing games
 1. rm -rf build

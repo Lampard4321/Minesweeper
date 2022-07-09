@@ -12,7 +12,9 @@ How to use this game
 There are three modes, easy, medium, hard.
 
 Easy: 9x9, number of mines = 10
+
 Medium: 16x16, number of mines = 40
+
 Hard: 30x16, number of mines = 99
 
 

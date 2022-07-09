@@ -4,14 +4,12 @@
 #include <termios.h>
 #include <cstdio>
 
-typedef enum DIR {
+enum DIR {
   WEST=0, 
   NORTH,
   SOUTH,
   EAST
-} DIR;
-
-
+};
 
 
 const int config[3][3] = {

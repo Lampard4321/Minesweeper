@@ -18,12 +18,12 @@ Medium: 16x16, number of mines = 40
 Hard: 30x16, number of mines = 99
 
 Keys
-h / j / k / l : left / down / up / right (same as Vim)
-q: left click
-w: right click (check as possible mine)
-e: double click (open neighbors except for possible mines)
+moving cursor -  h / j / k / l : left / down / up / right (same as Vim)
+left click - q
+check flag - w
+open around - e
 
-after playing games
+After playing games
 1. rm -rf build
 2. rm -rf bin
 

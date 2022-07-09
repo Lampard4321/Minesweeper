@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "field.h"
-
+ 
 using namespace std;
 
 field::field(int n_row, int n_col, int n_mine) {
@@ -169,8 +169,9 @@ void field::init_neighbor(int n_row, int n_col){
 }
 
 int field::neighbor_num_mine(int center_row, int center_col) {
-  int mine_count = 0;
   if (mine_field[center_row][center_col]) return -1;
+
+  int mine_count = 0;
   for (int i = -1; i <= 1; i++) {
     for (int j = -1; j <= 1; j++) {
       if (i == 0 && j == 0) continue;

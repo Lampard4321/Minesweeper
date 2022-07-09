@@ -1,6 +1,6 @@
 #ifndef MINESWEEPER_H
 #define MINESWEEPER_H
-
+ 
 #include "field.h"
 #include "utils.h"
 

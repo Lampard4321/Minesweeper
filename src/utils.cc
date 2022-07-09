@@ -1,5 +1,5 @@
 #include "utils.h"
-
+ 
 void initTermios(int echo) 
 {
   tcgetattr(0, &old); /* grab old terminal i/o settings */

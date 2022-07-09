@@ -1,6 +1,6 @@
 #ifndef FIELD_H
 #define FIELD_H
-
+ 
 #include "utils.h"
 
 class field{
@@ -24,6 +24,8 @@ class field{
     void chain_open(int row, int col);
 
   public:
+
+  private:
     bool** mine_field;
     bool** click_field;
     bool** flag_field;
@@ -33,9 +35,6 @@ class field{
     int n_mine;
     int done_th;
     int done_cur;
-
-  private:
-    
 };
 
 

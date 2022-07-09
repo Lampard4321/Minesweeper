@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "minesweeper.h"
-
+ 
 minesweeper::minesweeper(field* m_field) {
   this->m_field = m_field;
   cur_row = 0;

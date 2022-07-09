@@ -1,7 +1,7 @@
 #include "minesweeper.h"
 #include "field.h"
 #include "utils.h"
-
+ 
 #include <iostream>
 #include <cstring>
 
